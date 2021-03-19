@@ -1,0 +1,31 @@
+name: Testando php
+# This workflow is triggered on pushes to the repository.
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Setando versão do php
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        php-version: ['7.4', '8.0']
+
+    steps:
+      - name: Setup PHP with intl
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, intl, redis
+
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: imprime versao do php
+        run: |
+          php -v
+
+      
